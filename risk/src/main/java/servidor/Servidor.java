@@ -6,16 +6,15 @@ import java.net.*;
 public class Servidor {
 
     public static void main(String[] args) {
-        int puerto = 12345; // Puerto en el que el servidor escuchará las conexiones
+        int puerto = 12345;
         try (ServerSocket serverSocket = new ServerSocket(puerto)) {
             System.out.println("Servidor escuchando en el puerto " + puerto);
 
             while (true) {
-                // Espera la conexión del cliente
+
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Cliente conectado");
 
-                // Manejar la conexión en un nuevo hilo
                 new Thread(new ClientHandler(clientSocket)).start();
             }
 
@@ -25,7 +24,6 @@ public class Servidor {
     }
 }
 
-// Clase que maneja la comunicación con un cliente
 class ClientHandler implements Runnable {
     private Socket clientSocket;
 

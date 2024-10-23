@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -22,61 +23,38 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        VBox root = new VBox();
+        primaryStage.setTitle("Polygon Drawer");
 
-        mensajesArea = new TextArea();
-        mensajesArea.setEditable(false);
-        mensajeInput = new TextField();
-        enviarBtn = new Button("Enviar");
+        String filename = "risk\\src\\main\\resources\\paises.json";
 
-        enviarBtn.setOnAction(e -> enviarMensaje());
-
-        root.getChildren().addAll(mensajesArea, mensajeInput, enviarBtn);
-
-        Scene scene = new Scene(root, 400, 300);
-        primaryStage.setTitle("Cliente JavaFX");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        // Intentar conectar al servidor
-        conectarAlServidor();
-    }
-
-    // Método para conectar al servidor
-    private void conectarAlServidor() {
         try {
-            socket = new Socket("localhost", 12345); // Conectar al servidor en localhost y puerto 12345
-            output = new PrintWriter(socket.getOutputStream(), true);
-            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            // Hilo para escuchar mensajes del servidor
-            new Thread(() -> {
-                try {
-                    String respuesta;
-                    while ((respuesta = input.readLine()) != null) {
-                        String finalRespuesta = respuesta;
-                        // Actualizar el TextArea en el hilo de la GUI
-                        javafx.application.Platform.runLater(() -> {
-                            mensajesArea.appendText(finalRespuesta + "\n");
-                        });
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
+            MapDrawer mapDrawer = new MapDrawer(filename);
+            Scene scene = new Scene(mapDrawer.getRoot(), MapDrawer.CANVAS_WIDTH, MapDrawer.CANVAS_HEIGHT);
+            primaryStage.setScene(scene);
+            primaryStage.show();
         } catch (IOException e) {
-            mensajesArea.appendText("Error al conectar con el servidor\n");
             e.printStackTrace();
         }
     }
 
-    // Método para enviar mensaje al servidor
+    private void conectarAlServidor() {
+        try {
+            socket = new Socket("localhost", 12345);
+            output = new PrintWriter(socket.getOutputStream(), true);
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return;
+    }
+
     private void enviarMensaje() {
         String mensaje = mensajeInput.getText();
         if (mensaje != null && !mensaje.isEmpty()) {
-            output.println(mensaje); // Enviar mensaje al servidor
-            mensajeInput.clear();    // Limpiar el campo de texto
+            output.println(mensaje);
+            mensajeInput.clear();
         }
     }
 
