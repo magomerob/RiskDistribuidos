@@ -2,55 +2,39 @@ package servidor;
 
 import java.io.*;
 import java.net.*;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Servidor {
 
+    private static final int puerto = 42000;
+    private static List<ClientHandler> clients = new CopyOnWriteArrayList<>();
+    protected static List<Sala> salas = new CopyOnWriteArrayList<>();
+
     public static void main(String[] args) {
-        int puerto = 12345;
+        ExecutorService pool = Executors.newCachedThreadPool();
+        
+        salas.add(new Sala("Sala1", 2));
+
         try (ServerSocket serverSocket = new ServerSocket(puerto)) {
-            System.out.println("Servidor escuchando en el puerto " + puerto);
-
+            System.out.println("Servidor iniciado en el puerto " + puerto);
+            
             while (true) {
-
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Cliente conectado");
-
-                new Thread(new ClientHandler(clientSocket)).start();
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                clients.add(clientHandler);
+                pool.submit(clientHandler);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-}
 
-class ClientHandler implements Runnable {
-    private Socket clientSocket;
-
-    public ClientHandler(Socket socket) {
-        this.clientSocket = socket;
-    }
-
-    @Override
-    public void run() {
-        try (
-            BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true)
-        ) {
-            String mensaje;
-            while ((mensaje = input.readLine()) != null) {
-                System.out.println("Recibido del cliente: " + mensaje);
-                // Respuesta al cliente
-                output.println("Servidor recibió: " + mensaje);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                clientSocket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public static void broadcastSalas(){
+        for (ClientHandler clientHandler : clients) {
+            clientHandler.broadcast(salas);
+        }        
     }
 }
