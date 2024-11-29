@@ -5,23 +5,28 @@ import java.net.Socket;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import servidor.Sala;
 
 public class App extends Application {
 
     private Socket socket;
 
+    private Stage primaryStage;
+
+    private String nombre = "Invitado";
+
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage _primaryStage) {
+        this.primaryStage = _primaryStage;
         try {
             socket = new Socket("localhost", 42000);
             
-            LobbyView listView = new LobbyView(socket);
+            SeleccionNombre selNombre = new SeleccionNombre(this, socket);
             
-            Scene scene = new Scene(listView.getView());
-            primaryStage.setTitle("Client ListView");
+            Scene scene = new Scene(selNombre.getView());
+            primaryStage.setTitle("Seleccion Nombre");
             primaryStage.setScene(scene);
             primaryStage.show();
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,6 +45,18 @@ public class App extends Application {
         launch(args);
     }
 
+    protected void iniciarSalas(String nombre){
+
+        this.nombre = nombre;
+
+        LobbyView listView = new LobbyView(socket, this);
+            
+        Scene scene = new Scene(listView.getView());
+        primaryStage.setTitle("Client ListView");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
     private void cargarMapa(Stage stage){
         stage.setTitle("Polygon Drawer");
 
@@ -53,5 +70,13 @@ public class App extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void unirseSala(Sala s, boolean admin){
+        WaitingRoomView listView = new WaitingRoomView(socket, s,  this, admin);
+        Scene scene = new Scene(listView.getView());
+        primaryStage.setTitle("Sala de espera de: "+s.getNombre());
+        primaryStage.setScene(scene);
+        primaryStage.show();        
     }
 }

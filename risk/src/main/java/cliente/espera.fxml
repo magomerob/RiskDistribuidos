@@ -35,28 +35,32 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="400.0" prefWidth="659.0" VBox.vgrow="ALWAYS">
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-        <Label alignment="CENTER" layoutX="155.0" layoutY="177.0" style="&#10;" text="Drag components from Library here…" textAlignment="CENTER" textFill="#9f9f9f" wrapText="false">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Label>
-            <ListView fx:id="listView" layoutX="7.0" layoutY="13.0" prefHeight="375.0" prefWidth="476.0" />
-            <TextField fx:id="nombreSalaTF" layoutX="487.0" layoutY="38.0" />
-            <Text layoutX="526.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Sala:" />
-            <Text layoutX="493.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Capacidad Sala:" />
-            <TextField fx:id="capacidadSalaTF" alignment="CENTER" layoutX="579.0" layoutY="86.0" prefHeight="25.0" prefWidth="37.0" promptText="4" />
-            <Button fx:id="crearSalaButton" layoutX="527.0" layoutY="125.0" mnemonicParsing="false" text="Crear Sala" />
-            <Button fx:id="unirseButton" layoutX="493.0" layoutY="343.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="137.0" text="UNIRSE" />
+            <TextArea layoutX="14.0" layoutY="14.0" prefHeight="321.0" prefWidth="472.0" />
+            <ListView layoutX="493.0" layoutY="80.0" prefHeight="224.0" prefWidth="133.0" />
+            <Label alignment="CENTER" layoutX="493.0" layoutY="14.0" prefHeight="17.0" prefWidth="133.0" text="Jugadores" textAlignment="JUSTIFY">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="493.0" layoutY="44.0" prefHeight="17.0" prefWidth="133.0" text="1/4" textAlignment="JUSTIFY">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField layoutX="14.0" layoutY="349.0" prefHeight="25.0" prefWidth="393.0" />
+            <Button layoutX="415.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Enviar" />
+            <Button layoutX="493.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Salir" />
+            <Button layoutX="493.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Listo" />
       </children>
     </AnchorPane>
   </children>
