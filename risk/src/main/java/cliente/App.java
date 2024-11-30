@@ -72,10 +72,10 @@ public class App extends Application {
         }
     }
 
-    protected void unirseSala(Sala s, boolean admin){
-        WaitingRoomView listView = new WaitingRoomView(socket, s,  this, admin);
+    protected void unirseSala(Sala s){
+        WaitingRoomView listView = new WaitingRoomView(socket, s,  this);
         Scene scene = new Scene(listView.getView());
-        primaryStage.setTitle("Sala de espera de: "+s.getNombre());
+        primaryStage.setTitle("Sala de espera: "+s.getNombre());
         primaryStage.setScene(scene);
         primaryStage.show();        
     }

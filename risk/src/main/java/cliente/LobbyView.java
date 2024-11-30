@@ -134,7 +134,7 @@ public class LobbyView {
                             capacidad = Integer.parseInt(capacidadSalaTF.getText());
                         }catch(NumberFormatException e){
                             capacidad = 4;
-                        parent.unirseSala(new Sala(nombreSalaTF.getText(),capacidad), true);
+                        parent.unirseSala(new Sala(nombreSalaTF.getText(),capacidad));
                     }
                 }
                 });
@@ -153,7 +153,7 @@ public class LobbyView {
     }
 
     private void unirseSala(Sala s){
-        parent.unirseSala(s, false);
+        parent.unirseSala(s);
     }
 
     private void mostrarSalas(){

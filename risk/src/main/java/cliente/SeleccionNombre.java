@@ -55,6 +55,7 @@ public class SeleccionNombre {
             if(nombreTF.getText().isEmpty()){return;}
             if(nombreTF.getText().contains(Protocolo.DEL)){return;}
             out.println(Protocolo.INICIAR_SESION+Protocolo.DEL+nombreTF.getText());
+            out.flush();
             parent.iniciarSalas(nombreTF.getText());
         } catch (IOException e) {
             e.printStackTrace();

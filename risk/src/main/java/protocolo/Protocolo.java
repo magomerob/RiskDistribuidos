@@ -8,6 +8,7 @@ public class Protocolo {
     public static final String OK = "OK";
     public static final String CERRAR = "CERRAR";
     public static final String INICIAR_SESION ="INICIAR_SESION";
+    public static final String ACTUALIZAR_SALA ="ACTUALIZAR_SALA";
 
     public static final String DEL = ";";
 }

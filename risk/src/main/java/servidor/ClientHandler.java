@@ -18,12 +18,11 @@ public class ClientHandler implements Runnable {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader inp;
-    private boolean enSala;
+    private String nombreSala;
     private Jugador jugador;
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
-        this.enSala = false;
     }
 
     @Override
@@ -56,30 +55,45 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    protected void broadcast(List<Sala> salas) {
-            System.out.println("enviando salas");
-            String msg = Mensaje.listaSalas(salas);
-            System.out.println(msg);
-            out.println(msg);
+    protected void broadcast(String s) {
+            out.println(s);
             out.flush();
     }
 
     public boolean isEnSala(){
-        return this.enSala;
+        if(this.nombreSala == null){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isEnNombreSala(String nombre){
+        if(this.nombreSala == null){
+            return false;
+        }
+        if(this.nombreSala.equals(nombre)){
+            return true;
+        }
+        return false;
     }
 
     private void procesarMensaje(String mensaje){
         String[] separado = mensaje.split(Protocolo.DEL);
         if(separado[0].equals(Protocolo.CREAR_SALA)){
-            boolean creada = Servidor.crearSala(separado[1], Integer.parseInt(separado[2]), this.jugador);
+            boolean creada = Servidor.crearSala(separado[1], Integer.parseInt(separado[2]), this);
             out.println(Mensaje.salaCreada(creada));
             out.flush();
         }
         if(separado[0].equals(Protocolo.UNIRSE_SALA)){
-            Servidor.unirClienteASala(this.jugador, separado[1]);
+            Servidor.unirClienteASala(this, separado[1]);
+            this.nombreSala = separado[1];
         }
         if(separado[0].equals(Protocolo.INICIAR_SESION)){
             this.jugador =  new Jugador(separado[1], this.clientSocket.getInetAddress());
         }
+    }
+
+    public Jugador getJugador(){
+        return jugador;
     }
 }

@@ -1,5 +1,6 @@
 package protocolo;
 
+import servidor.Jugador;
 import servidor.Sala;
 import java.util.List;
 
@@ -34,6 +35,19 @@ public class Mensaje {
         }else{
             return Protocolo.CREAR_SALA+Protocolo.DEL+Protocolo.ERROR;
         }
+    }
+
+    public static String actualizarSala(Sala s){
+        String mensaje = Protocolo.ACTUALIZAR_SALA;
+        for (Jugador j : s.getJugadores()) {
+            mensaje+=Protocolo.DEL;
+            mensaje+=j.getNombre();
+            mensaje+=Protocolo.DEL;
+            mensaje+=j.getIp().getHostName();
+            mensaje+=Protocolo.DEL;
+            mensaje+=j.isListo();
+        }
+        return mensaje;
     }
     
 }
