@@ -50,7 +50,7 @@ public class Servidor {
         }        
     }
 
-    protected static boolean crearSala(String nombre, int capacidad, Socket usuario){
+    protected static boolean crearSala(String nombre, int capacidad, Jugador usuario){
         if(nombre.contains(Protocolo.DEL)){return false;}
         for (Sala sala : salas) {
             if(sala.getNombre().equals(nombre)){
@@ -64,7 +64,7 @@ public class Servidor {
         return true;
     }
 
-    protected static void unirClienteASala(Socket cliente, String nombreSala){
+    protected static void unirClienteASala(Jugador cliente, String nombreSala){
         for (Sala sala : salas) {
             if(sala.getNombre().equals(nombreSala)){
                 sala.addJugador(cliente);

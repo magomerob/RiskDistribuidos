@@ -123,31 +123,32 @@ public class LobbyView {
             }
             mostrarSalas();
         }
-        if(mensaje.equals(Mensaje.salaCreada(true))){
-            this.setEnLobby(false);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    int capacidad;
-                    try{
-                        capacidad = Integer.parseInt(capacidadSalaTF.getText());
-                    }catch(NumberFormatException e){
-                        capacidad = 4;
-                    parent.unirseSala(new Sala(nombreSalaTF.getText(),capacidad), true);
+        if(separado[0].equals(Protocolo.CREAR_SALA)){
+            if(separado[1].equals(Protocolo.OK)){
+                this.setEnLobby(false);
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        int capacidad;
+                        try{
+                            capacidad = Integer.parseInt(capacidadSalaTF.getText());
+                        }catch(NumberFormatException e){
+                            capacidad = 4;
+                        parent.unirseSala(new Sala(nombreSalaTF.getText(),capacidad), true);
+                    }
                 }
+                });
             }
-            });
             
-        }
-        if(mensaje.equals(Mensaje.salaCreada(false))){
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    Alert alert = new Alert(AlertType.ERROR, "Error al crear la sala", ButtonType.OK);
-                    alert.showAndWait();
-                }
-            });
-            
+            if(separado[1].equals(Protocolo.ERROR)){
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        Alert alert = new Alert(AlertType.ERROR, "Error al crear la sala", ButtonType.OK);
+                        alert.showAndWait();
+                    }
+                });                
+            }
         }
     }
 

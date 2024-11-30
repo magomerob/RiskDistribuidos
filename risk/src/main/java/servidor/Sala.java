@@ -12,7 +12,7 @@ public class Sala implements Serializable{
     private int numJugadores;
     private String nombre;
     private int capacidad;
-    private List<Socket> jugadores = new ArrayList<Socket>();
+    private List<Jugador> jugadores = new ArrayList<Jugador>();
     public Sala(String nombre, int capacidad){
         this.nombre = nombre;
         this.capacidad = capacidad;
@@ -24,11 +24,11 @@ public class Sala implements Serializable{
     public int getCapacidad(){
         return this.capacidad;
     }
-    public List<Socket> getJugadores(){
+    public List<Jugador> getJugadores(){
         return this.jugadores;
     }
 
-    public void addJugador(Socket j){
+    public void addJugador(Jugador j){
         this.jugadores.add(j);
     }
 

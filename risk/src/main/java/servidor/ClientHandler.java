@@ -19,7 +19,7 @@ public class ClientHandler implements Runnable {
     private PrintWriter out;
     private BufferedReader inp;
     private boolean enSala;
-    private String nombre;
+    private Jugador jugador;
 
     public ClientHandler(Socket socket) {
         this.clientSocket = socket;
@@ -71,15 +71,15 @@ public class ClientHandler implements Runnable {
     private void procesarMensaje(String mensaje){
         String[] separado = mensaje.split(Protocolo.DEL);
         if(separado[0].equals(Protocolo.CREAR_SALA)){
-            boolean creada = Servidor.crearSala(separado[1], Integer.parseInt(separado[2]), clientSocket);
+            boolean creada = Servidor.crearSala(separado[1], Integer.parseInt(separado[2]), this.jugador);
             out.println(Mensaje.salaCreada(creada));
             out.flush();
         }
         if(separado[0].equals(Protocolo.UNIRSE_SALA)){
-            Servidor.unirClienteASala(clientSocket, separado[1]);
+            Servidor.unirClienteASala(this.jugador, separado[1]);
         }
         if(separado[0].equals(Protocolo.INICIAR_SESION)){
-            this.nombre = separado[1];
+            this.jugador =  new Jugador(separado[1], this.clientSocket.getInetAddress());
         }
     }
 }
