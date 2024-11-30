@@ -6,6 +6,7 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +19,7 @@ public class Servidor {
 
     private static List<ClientHandler> clients = new CopyOnWriteArrayList<>();
     protected static List<Sala> salas = new CopyOnWriteArrayList<>();
-    private static HashMap<String, List<ClientHandler>> clientesEnSala;
+    private static ConcurrentHashMap<String, List<ClientHandler>> clientesEnSala;
     private static ServerSocket serverSocket;
     private static ExecutorService pool;
 
@@ -29,12 +30,12 @@ public class Servidor {
     private static void iniciarServidor(){
         
         pool = Executors.newCachedThreadPool();
-        clientesEnSala = new HashMap<String, List<ClientHandler>>();
+        clientesEnSala = new ConcurrentHashMap<String, List<ClientHandler>>();
         try (ServerSocket _serverSocket = new ServerSocket(puerto)) {
             serverSocket = _serverSocket;
             System.out.println("Servidor iniciado en el puerto " + puerto);
             
-            while (true) {
+            while (!Thread.interrupted()) {
                 Socket clientSocket = serverSocket.accept();
                 ClientHandler clientHandler = new ClientHandler(clientSocket);
                 clients.add(clientHandler);
@@ -47,7 +48,6 @@ public class Servidor {
 
     protected static void broadcastSalas(){
         for (ClientHandler clientHandler : clients) {
-            System.out.println("mandando enviar salas");
             if(!clientHandler.isEnSala()){
                 String msg = Mensaje.listaSalas(salas);
                 clientHandler.broadcast(msg);
@@ -80,17 +80,18 @@ public class Servidor {
                 salas.set(i, sala);
                 List<ClientHandler> l = clientesEnSala.get(sala.getNombre());
                 l.add(cliente);
-                clientesEnSala.put(nombreSala, l);
+                clientesEnSala.replace(nombreSala, l);
+                cliente.broadcast("");
                 actualizarSala(sala);
             }
-        }
+        }        
     }
 
     public static void actualizarSala(Sala s){
         List<ClientHandler> clientesSala = clientesEnSala.get(s.getNombre());
-        for (ClientHandler clientHandler : clientesSala) {
+        for (ClientHandler ch : clientesSala) {
             String msg = Mensaje.actualizarSala(s);
-            clientHandler.broadcast(msg);
+            ch.broadcast(msg);
         }
     }
 }

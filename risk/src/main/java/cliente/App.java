@@ -15,6 +15,8 @@ public class App extends Application {
 
     private String nombre = "Invitado";
 
+    private Scene scene;
+
     @Override
     public void start(Stage _primaryStage) {
         this.primaryStage = _primaryStage;
@@ -23,7 +25,7 @@ public class App extends Application {
             
             SeleccionNombre selNombre = new SeleccionNombre(this, socket);
             
-            Scene scene = new Scene(selNombre.getView());
+            this.scene = new Scene(selNombre.getView());
             primaryStage.setTitle("Seleccion Nombre");
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -50,8 +52,8 @@ public class App extends Application {
         this.nombre = nombre;
 
         LobbyView listView = new LobbyView(socket, this);
-            
-        Scene scene = new Scene(listView.getView());
+        
+        this.scene = new Scene(listView.getView());
         primaryStage.setTitle("Client ListView");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -73,8 +75,9 @@ public class App extends Application {
     }
 
     protected void unirseSala(Sala s){
+
         WaitingRoomView listView = new WaitingRoomView(socket, s,  this);
-        Scene scene = new Scene(listView.getView());
+        this.scene = new Scene(listView.getView());
         primaryStage.setTitle("Sala de espera: "+s.getNombre());
         primaryStage.setScene(scene);
         primaryStage.show();        

@@ -13,6 +13,7 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -66,13 +67,12 @@ public class WaitingRoomView {
 
     private void escuchar(){
         try{
+            
             String msg = this.inp.readLine();
             while (msg != null) {
                 procesarMensaje(msg);
                 msg = this.inp.readLine();      
             }
-
-            System.out.println("dejo de escuchar");
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -99,14 +99,20 @@ public class WaitingRoomView {
     }
             
     private void mostrarJugadores() {
-        this.listView.getItems().clear();
-        for (Jugador j : jugadores) {
-            if(j.isListo()){
-                this.listView.getItems().add(j.getNombre()+" [LISTO]");
-            }else{
-                this.listView.getItems().add(j.getNombre()+" [ESPERANDO]");
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run(){
+                listView.getItems().clear();
+                for (Jugador j : jugadores) {
+                    if(j.isListo()){
+                        listView.getItems().add(j.getNombre()+" [LISTO]");
+                    }else{
+                        listView.getItems().add(j.getNombre()+" [ESPERANDO]");
+                    }
+                    
+                }
             }
             
-        }
+        });
     }
 }

@@ -39,7 +39,6 @@ public class ClientHandler implements Runnable {
 
             while (!this.clientSocket.isClosed()) {
                 msg = inp.readLine();
-                System.out.println(msg);
                 procesarMensaje(msg);
             }
 
@@ -85,8 +84,8 @@ public class ClientHandler implements Runnable {
             out.flush();
         }
         if(separado[0].equals(Protocolo.UNIRSE_SALA)){
-            Servidor.unirClienteASala(this, separado[1]);
             this.nombreSala = separado[1];
+            Servidor.unirClienteASala(this, separado[1]);            
         }
         if(separado[0].equals(Protocolo.INICIAR_SESION)){
             this.jugador =  new Jugador(separado[1], this.clientSocket.getInetAddress());

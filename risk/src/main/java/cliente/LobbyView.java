@@ -101,7 +101,8 @@ public class LobbyView {
             String msg;
 
             while (enLobby) {
-                msg = inp.readLine();                
+                msg = inp.readLine(); 
+                System.out.println(msg);              
                 if(msg!=null){
                     procesarMensaje(msg);
                 }                
@@ -153,7 +154,8 @@ public class LobbyView {
     }
 
     private void unirseSala(Sala s){
-        parent.unirseSala(s);
+        this.setEnLobby(false);
+        parent.unirseSala(s);        
     }
 
     private void mostrarSalas(){
