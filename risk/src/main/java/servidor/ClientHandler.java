@@ -90,6 +90,10 @@ public class ClientHandler implements Runnable {
         if(separado[0].equals(Protocolo.INICIAR_SESION)){
             this.jugador =  new Jugador(separado[1], this.clientSocket.getInetAddress());
         }
+        if(separado[0].equals(Protocolo.SET_LISTO)){
+            this.jugador.setListo(Boolean.parseBoolean(separado[2]));
+            Servidor.actualizarListoSala(this.jugador, separado[1]);
+        }
     }
 
     public Jugador getJugador(){

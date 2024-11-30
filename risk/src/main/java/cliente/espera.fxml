@@ -52,7 +52,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="493.0" layoutY="44.0" prefHeight="17.0" prefWidth="133.0" text="1/4" textAlignment="JUSTIFY">
+            <Label fx:id="capacidadText" alignment="CENTER" layoutX="493.0" layoutY="44.0" prefHeight="17.0" prefWidth="133.0" text="1/4" textAlignment="JUSTIFY">
                <font>
                   <Font size="20.0" />
                </font>
@@ -60,7 +60,7 @@
             <TextField layoutX="14.0" layoutY="349.0" prefHeight="25.0" prefWidth="393.0" />
             <Button layoutX="415.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Enviar" />
             <Button layoutX="493.0" layoutY="310.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Salir" />
-            <Button layoutX="493.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Listo" />
+            <Button fx:id="listoButton" layoutX="493.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Listo" />
       </children>
     </AnchorPane>
   </children>

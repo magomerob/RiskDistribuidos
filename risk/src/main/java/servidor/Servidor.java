@@ -2,9 +2,7 @@ package servidor;
 
 import java.io.*;
 import java.net.*;
-import java.security.PublicKey;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -81,10 +79,11 @@ public class Servidor {
                 List<ClientHandler> l = clientesEnSala.get(sala.getNombre());
                 l.add(cliente);
                 clientesEnSala.replace(nombreSala, l);
-                cliente.broadcast("");
+                cliente.broadcast(""); //Itera el bucle de lectura de LobbyView para salir de él
                 actualizarSala(sala);
             }
-        }        
+        }
+        broadcastSalas();
     }
 
     public static void actualizarSala(Sala s){
@@ -92,6 +91,17 @@ public class Servidor {
         for (ClientHandler ch : clientesSala) {
             String msg = Mensaje.actualizarSala(s);
             ch.broadcast(msg);
+        }
+    }
+
+    public static void actualizarListoSala(Jugador j, String nombreSala){
+        for (int i = 0; i < salas.size(); i++) {
+            Sala sala = salas.get(i);
+            if(sala.getNombre().equals(nombreSala)){
+                sala.updateListoJugador(j);
+                salas.set(i, sala);
+                actualizarSala(sala);
+            }
         }
     }
 }

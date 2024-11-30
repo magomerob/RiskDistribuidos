@@ -3,27 +3,24 @@ package cliente;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
+import javafx.print.PrintColor;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import protocolo.Protocolo;
 import servidor.Jugador;
 import servidor.Sala;
@@ -37,24 +34,36 @@ public class WaitingRoomView {
     private List<Jugador> jugadores = new ArrayList<>();
     @FXML
     private ListView<String> listView;
+    @FXML
+    private Button listoButton;
+    @FXML
+    private Label capacidadText;
+    private Sala sala;
+    private boolean listo;
 
     public WaitingRoomView(Socket s, Sala sala, App _parent) {
         try {
             this.parent = _parent;
+            this.sala = sala;
             this.out = new PrintWriter(new OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8));
             this.inp = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
-        
+            this.listo=false;
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("espera.fxml"));
             loader.setController(this);
             view = loader.load();
             
+            this.capacidadText.setText(sala.getNumJugadores()+"/"+sala.getCapacidad());
+
             Thread escuchar = new Thread(() -> escuchar());
             escuchar.start();
 
             this.out.println(Protocolo.UNIRSE_SALA+Protocolo.DEL+sala.getNombre());
             this.out.flush();
 
-            
+            listoButton.setOnAction(event -> {
+                botonListo();
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -111,8 +120,22 @@ public class WaitingRoomView {
                     }
                     
                 }
+                capacidadText.setText(jugadores.size()+"/"+sala.getCapacidad());
             }
             
         });
+    }
+
+    private void botonListo(){
+        this.listo = !this.listo;
+
+        if(this.listo){
+            listoButton.setText("No estoy listo");
+        }else{
+            listoButton.setText("Listo");
+        }
+
+        this.out.println(Protocolo.SET_LISTO+Protocolo.DEL+this.sala.getNombre()+Protocolo.DEL+this.listo);
+        this.out.flush();
     }
 }
