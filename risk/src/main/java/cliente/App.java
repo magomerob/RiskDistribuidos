@@ -76,7 +76,7 @@ public class App extends Application {
 
     protected void unirseSala(Sala s){
 
-        WaitingRoomView listView = new WaitingRoomView(socket, s,  this);
+        WaitingRoomView listView = new WaitingRoomView(socket, s,  this, nombre);
         this.scene = new Scene(listView.getView());
         primaryStage.setTitle("Sala de espera: "+s.getNombre());
         primaryStage.setScene(scene);

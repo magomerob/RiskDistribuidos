@@ -94,6 +94,8 @@ public class ClientHandler implements Runnable {
             out.flush();
             this.nombreSala = null;
             Servidor.jugadorSaleSala(this.jugador, separado[1]);
+        }if(separado[0].equals(Protocolo.MENSAJE)){
+            Servidor.broadcastMensaje(separado[1],separado[2],separado[3]);
         }
     }
 

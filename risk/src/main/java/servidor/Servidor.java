@@ -116,4 +116,11 @@ public class Servidor {
         }
         broadcastSalas();
     }
+
+    public static void broadcastMensaje(String nSala, String nJugador, String msg){
+        List<ClientHandler> clientesSala = clientesEnSala.get(nSala);
+        for (ClientHandler ch : clientesSala) {
+            ch.broadcast(Protocolo.MENSAJE+Protocolo.DEL+nJugador+Protocolo.DEL+msg);
+        }
+    }
 }

@@ -18,6 +18,7 @@ import javafx.print.PrintColor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -39,24 +40,34 @@ public class WaitingRoomView {
     @FXML
     private Button salirButton;
     @FXML
+    private Button enviarButton;
+    @FXML
     private Label capacidadText;
+    @FXML
+    private TextArea logText;
+    @FXML
+    private TextField mensajeText;
+    
     private Sala sala;
     private boolean listo;
+    private String nombre;
 
-    public WaitingRoomView(Socket s, Sala sala, App _parent) {
+    public WaitingRoomView(Socket s, Sala sala, App _parent, String nombre) {
         try {
             this.parent = _parent;
             this.sala = sala;
             this.out = new PrintWriter(new OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8));
             this.inp = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
             this.listo=false;
+            this.nombre = nombre;
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("espera.fxml"));
             loader.setController(this);
             view = loader.load();
             
             this.capacidadText.setText(sala.getNumJugadores()+"/"+sala.getCapacidad());
-
+            this.logText.setEditable(false);
+            
             Thread escuchar = new Thread(() -> escuchar());
             escuchar.start();
 
@@ -71,6 +82,9 @@ public class WaitingRoomView {
                 salirSala();
             });
 
+            enviarButton.setOnAction(event -> {
+                enviarMensaje();
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -110,6 +124,8 @@ public class WaitingRoomView {
                 this.jugadores.add(j);
             }
             this.mostrarJugadores();
+        }if(separado[0].equals(Protocolo.MENSAJE)){
+            mostrarMensaje(separado[1]+": "+separado[2]);
         }
     }
             
@@ -151,5 +167,24 @@ public class WaitingRoomView {
         parent.iniciarSalas(null);
         this.out.println(Protocolo.CERRAR+Protocolo.DEL+nombre);
         this.out.flush();
+    }
+
+    private void enviarMensaje(){
+        String mensaje = this.mensajeText.getText();
+        if(mensaje.isBlank()){return;}
+        this.mensajeText.setText("");
+        this.out.println(Protocolo.MENSAJE+Protocolo.DEL+this.sala.getNombre()+Protocolo.DEL+this.nombre+Protocolo.DEL+mensaje);
+        this.out.flush();
+    }
+
+    private void mostrarMensaje(String msg){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run(){
+                String s = logText.getText();
+                s+="\n";
+                s+=msg;
+                logText.setText(s);
+        }});
     }
 }
