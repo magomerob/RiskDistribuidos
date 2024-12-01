@@ -48,9 +48,9 @@ public class App extends Application {
     }
 
     protected void iniciarSalas(String nombre){
-
-        this.nombre = nombre;
-
+        if(nombre != null){
+            this.nombre = nombre;
+        }
         LobbyView listView = new LobbyView(socket, this);
         
         this.scene = new Scene(listView.getView());

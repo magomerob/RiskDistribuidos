@@ -75,6 +75,9 @@ public class LobbyView {
     }
 
     private void nuevaSala() {
+        if(this.nombreSalaTF.getText().isEmpty()){
+            return;
+        }
         int capacidad;
         try{
             capacidad = Integer.parseInt(capacidadSalaTF.getText());
@@ -101,9 +104,9 @@ public class LobbyView {
             String msg;
 
             while (enLobby) {
-                msg = inp.readLine(); 
-                System.out.println(msg);              
+                msg = inp.readLine();            
                 if(msg!=null){
+                    System.out.println(msg);
                     procesarMensaje(msg);
                 }                
             }
@@ -159,10 +162,15 @@ public class LobbyView {
     }
 
     private void mostrarSalas(){
-        this.listView.getItems().clear();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                listView.getItems().clear();
         for (Sala sala : localsalas) {
-            this.listView.getItems().add(sala.getNombre()+" "+sala.getNumJugadores()+"/"+sala.getCapacidad());
+            listView.getItems().add(sala.getNombre()+" "+sala.getNumJugadores()+"/"+sala.getCapacidad());
         }
+            }
+        });
     }
 
     private void setEnLobby(boolean b){

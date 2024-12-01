@@ -54,4 +54,13 @@ public class Sala implements Serializable{
             }
         }
     }
+
+    public void remJugador(Jugador j){
+        for (int i=0; i<jugadores.size(); i++) {
+            Jugador jugador = jugadores.get(i);
+            if(jugador.getNombre().equals(j.getNombre()) && jugador.getIp().equals(j.getIp())){
+                this.jugadores.remove(i);
+            }
+        }
+    }
 }

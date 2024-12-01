@@ -104,4 +104,16 @@ public class Servidor {
             }
         }
     }
+
+    public static void jugadorSaleSala(Jugador j, String s){
+        for (int i = 0; i < salas.size(); i++) {
+            Sala sala = salas.get(i);
+            if(sala.getNombre().equals(s)){
+                sala.remJugador(j);
+                salas.set(i, sala);
+                actualizarSala(sala);
+            }
+        }
+        broadcastSalas();
+    }
 }

@@ -69,8 +69,7 @@ public class ClientHandler implements Runnable {
     public boolean isEnNombreSala(String nombre){
         if(this.nombreSala == null){
             return false;
-        }
-        if(this.nombreSala.equals(nombre)){
+        }if(this.nombreSala.equals(nombre)){
             return true;
         }
         return false;
@@ -82,17 +81,19 @@ public class ClientHandler implements Runnable {
             boolean creada = Servidor.crearSala(separado[1], Integer.parseInt(separado[2]), this);
             out.println(Mensaje.salaCreada(creada));
             out.flush();
-        }
-        if(separado[0].equals(Protocolo.UNIRSE_SALA)){
+        }if(separado[0].equals(Protocolo.UNIRSE_SALA)){
             this.nombreSala = separado[1];
             Servidor.unirClienteASala(this, separado[1]);            
-        }
-        if(separado[0].equals(Protocolo.INICIAR_SESION)){
+        }if(separado[0].equals(Protocolo.INICIAR_SESION)){
             this.jugador =  new Jugador(separado[1], this.clientSocket.getInetAddress());
-        }
-        if(separado[0].equals(Protocolo.SET_LISTO)){
+        }if(separado[0].equals(Protocolo.SET_LISTO)){
             this.jugador.setListo(Boolean.parseBoolean(separado[2]));
             Servidor.actualizarListoSala(this.jugador, separado[1]);
+        }if(separado[0].equals(Protocolo.CERRAR)){
+            out.println("");
+            out.flush();
+            this.nombreSala = null;
+            Servidor.jugadorSaleSala(this.jugador, separado[1]);
         }
     }
 

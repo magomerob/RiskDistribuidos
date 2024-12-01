@@ -37,6 +37,8 @@ public class WaitingRoomView {
     @FXML
     private Button listoButton;
     @FXML
+    private Button salirButton;
+    @FXML
     private Label capacidadText;
     private Sala sala;
     private boolean listo;
@@ -65,6 +67,10 @@ public class WaitingRoomView {
                 botonListo();
             });
 
+            salirButton.setOnAction(event -> {
+                salirSala();
+            });
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +84,7 @@ public class WaitingRoomView {
         try{
             
             String msg = this.inp.readLine();
-            while (msg != null) {
+            while (msg != null && this.sala!=null) {
                 procesarMensaje(msg);
                 msg = this.inp.readLine();      
             }
@@ -136,6 +142,14 @@ public class WaitingRoomView {
         }
 
         this.out.println(Protocolo.SET_LISTO+Protocolo.DEL+this.sala.getNombre()+Protocolo.DEL+this.listo);
+        this.out.flush();
+    }
+
+    private void salirSala(){
+        String nombre = this.sala.getNombre();
+        this.sala = null;
+        parent.iniciarSalas(null);
+        this.out.println(Protocolo.CERRAR+Protocolo.DEL+nombre);
         this.out.flush();
     }
 }
