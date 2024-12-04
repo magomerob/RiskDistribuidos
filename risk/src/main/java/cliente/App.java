@@ -5,6 +5,8 @@ import java.net.Socket;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import juego.InterfazJuego;
+import juego.MapDrawer;
 import servidor.Sala;
 
 public class App extends Application {
@@ -17,6 +19,7 @@ public class App extends Application {
 
     private Scene scene;
 
+    /*
     @Override
     public void start(Stage _primaryStage) {
         this.primaryStage = _primaryStage;
@@ -34,7 +37,21 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
+    */
+    
+    //Iniciar interfaz juego (TEST)
+    @Override
+    public void start(Stage _primaryStage) {
+        this.primaryStage = _primaryStage;
+        primaryStage.setTitle("Polygon Drawer");
 
+        InterfazJuego interfazJuego = new InterfazJuego(this);
+
+        this.scene = new Scene(interfazJuego.getView(),1000,700);
+        primaryStage.setTitle("Seleccion Nombre");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
     @Override
     public void stop() throws Exception {
@@ -57,21 +74,6 @@ public class App extends Application {
         primaryStage.setTitle("Client ListView");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    private void cargarMapa(Stage stage){
-        stage.setTitle("Polygon Drawer");
-
-        String filename = "risk\\src\\main\\resources\\paises.json";
-
-        try {
-            MapDrawer mapDrawer = new MapDrawer(filename);
-            Scene scene = new Scene(mapDrawer.getRoot(), MapDrawer.CANVAS_WIDTH, MapDrawer.CANVAS_HEIGHT);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     protected void unirseSala(Sala s){
