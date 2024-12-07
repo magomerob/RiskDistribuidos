@@ -12,10 +12,12 @@ public class Sala implements Serializable{
     private int numJugadores;
     private String nombre;
     private int capacidad;
+    private int listos;
     private List<Jugador> jugadores = new ArrayList<Jugador>();
     public Sala(String nombre, int capacidad){
         this.nombre = nombre;
         this.capacidad = capacidad;
+        this.listos = 0;
     }
 
     public String getNombre(){
@@ -62,5 +64,13 @@ public class Sala implements Serializable{
                 this.jugadores.remove(i);
             }
         }
+    }
+
+    public void setListos(int listos){
+        this.listos = listos;
+    }
+
+    public int getListos(){
+        return this.listos;
     }
 }

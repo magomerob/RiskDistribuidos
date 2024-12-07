@@ -158,7 +158,7 @@ public class LobbyView {
 
     private void unirseSala(Sala s){
         this.setEnLobby(false);
-        parent.unirseSala(s);        
+        parent.unirseSala(s);  
     }
 
     private void mostrarSalas(){
@@ -176,4 +176,5 @@ public class LobbyView {
     private void setEnLobby(boolean b){
         this.enLobby = b;
     }
+
 }

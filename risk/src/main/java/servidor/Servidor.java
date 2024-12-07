@@ -92,6 +92,13 @@ public class Servidor {
             String msg = Mensaje.actualizarSala(s);
             ch.broadcast(msg);
         }
+        if(s.getListos()==s.getCapacidad()){
+            for (ClientHandler ch : clientesSala) {
+                String msg = Protocolo.SALA_LISTA;
+                ch.broadcast(msg);
+                ch.cerrarConexion();
+            }
+        }
     }
 
     public static void actualizarListoSala(Jugador j, String nombreSala){
@@ -99,6 +106,11 @@ public class Servidor {
             Sala sala = salas.get(i);
             if(sala.getNombre().equals(nombreSala)){
                 sala.updateListoJugador(j);
+                if(j.isListo()){
+                    sala.setListos(sala.getListos()+1);
+                }else{
+                    sala.setListos(sala.getListos()-1);
+                }
                 salas.set(i, sala);
                 actualizarSala(sala);
             }
@@ -111,6 +123,7 @@ public class Servidor {
             if(sala.getNombre().equals(s)){
                 sala.remJugador(j);
                 salas.set(i, sala);
+                sala.setListos(sala.getListos()-1);
                 actualizarSala(sala);
             }
         }

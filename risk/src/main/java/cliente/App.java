@@ -1,11 +1,13 @@
 package cliente;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.CountDownLatch;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import juego.InterfazJuego;
+import juego.Juego;
 import juego.MapDrawer;
 import servidor.Sala;
 
@@ -19,7 +21,6 @@ public class App extends Application {
 
     private Scene scene;
 
-    /*
     @Override
     public void start(Stage _primaryStage) {
         this.primaryStage = _primaryStage;
@@ -37,9 +38,8 @@ public class App extends Application {
             e.printStackTrace();
         }
     }
-    */
-    
-    //Iniciar interfaz juego (TEST)
+    /*
+    /*Iniciar interfaz juego (TEST)
     @Override
     public void start(Stage _primaryStage) {
         this.primaryStage = _primaryStage;
@@ -51,6 +51,20 @@ public class App extends Application {
         primaryStage.setTitle("Seleccion Nombre");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }*/
+
+    public void iniciarJuego(String[] ips, boolean empiezo){
+        primaryStage.setTitle("Risk");
+
+        InterfazJuego interfazJuego = new InterfazJuego(this);
+
+        this.scene = new Scene(interfazJuego.getView(),1000,700);
+        primaryStage.setTitle("Seleccion Nombre");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        final CountDownLatch sincro = new CountDownLatch(1);
+        Juego j = new Juego(ips, empiezo, interfazJuego, sincro);
+        interfazJuego.setJuego(j);
     }
 
     @Override

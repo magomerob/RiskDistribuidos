@@ -18,7 +18,11 @@ public class InterfazJuego{
 
     private App parent;
     private Pane view;
+    private Juego juego;
 
+    public void setJuego(Juego juego) {
+        this.juego = juego;
+    }
 
     public InterfazJuego(App _parent){
         this.parent = _parent;

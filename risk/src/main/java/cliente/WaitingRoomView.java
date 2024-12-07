@@ -51,16 +51,19 @@ public class WaitingRoomView {
     private Sala sala;
     private boolean listo;
     private String nombre;
+    private Socket s;
+    private boolean salir;
 
     public WaitingRoomView(Socket s, Sala sala, App _parent, String nombre) {
         try {
+            this.s=s;
             this.parent = _parent;
             this.sala = sala;
             this.out = new PrintWriter(new OutputStreamWriter(s.getOutputStream(), StandardCharsets.UTF_8));
             this.inp = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
             this.listo=false;
             this.nombre = nombre;
-
+            this.salir = false;
             FXMLLoader loader = new FXMLLoader(getClass().getResource("espera.fxml"));
             loader.setController(this);
             view = loader.load();
@@ -98,9 +101,11 @@ public class WaitingRoomView {
         try{
             
             String msg = this.inp.readLine();
-            while (msg != null && this.sala!=null) {
+            while (msg != null && this.sala!=null && !this.salir) {
                 procesarMensaje(msg);
-                msg = this.inp.readLine();      
+                if(!salir){
+                    msg = this.inp.readLine();  
+                }                    
             }
         }catch(IOException e){
             e.printStackTrace();
@@ -126,6 +131,27 @@ public class WaitingRoomView {
             this.mostrarJugadores();
         }if(separado[0].equals(Protocolo.MENSAJE)){
             mostrarMensaje(separado[1]+": "+separado[2]);
+        }if(separado[0].equals(Protocolo.SALA_LISTA)){
+            this.cerrarConexion();
+            String[] ips = new String[this.sala.getCapacidad()];
+            boolean empiezo = false;
+            for(int i =0; i<jugadores.size(); i++){
+                Jugador j = jugadores.get(i);
+                if(j.getIp().equals( this.s.getInetAddress()) && j.getNombre().equals(this.nombre)){
+                    if(i==0){
+                        empiezo = true;
+                    }
+                }
+                ips[i] = j.getIp().getHostName();
+            }
+            final boolean _empiezo = empiezo;
+            this.salir = true;
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    parent.iniciarJuego(ips, _empiezo);
+                }
+            });            
         }
     }
             
@@ -186,5 +212,17 @@ public class WaitingRoomView {
                 s+=msg;
                 logText.setText(s);
         }});
+    }
+
+    public void cerrarConexion() {
+        try{
+            this.inp.close();
+            this.out.close();
+            if(this.s!=null){
+                this.s.close();
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

@@ -53,6 +53,7 @@ public class ClientHandler implements Runnable {
     }
 
     protected void broadcast(String s) {
+            System.out.println(this.clientSocket.getLocalAddress()+" <- " + s);
             out.println(s);
             out.flush();
     }
@@ -74,6 +75,9 @@ public class ClientHandler implements Runnable {
     }
 
     private void procesarMensaje(String mensaje){
+        if(mensaje == null){
+            return;
+        }
         String[] separado = mensaje.split(Protocolo.DEL);
         if(separado[0].equals(Protocolo.CREAR_SALA)){
             boolean creada = Servidor.crearSala(separado[1], Integer.parseInt(separado[2]), this);
@@ -99,5 +103,19 @@ public class ClientHandler implements Runnable {
 
     public Jugador getJugador(){
         return jugador;
+    }
+
+    public void cerrarConexion() {
+        System.out.println("Cerrando");
+        try{
+            this.inp.close();
+            this.out.close();
+            if(this.clientSocket!=null){
+                this.clientSocket.close();
+                
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

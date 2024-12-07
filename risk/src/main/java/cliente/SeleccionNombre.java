@@ -57,6 +57,7 @@ public class SeleccionNombre {
             out.println(Protocolo.INICIAR_SESION+Protocolo.DEL+nombreTF.getText());
             out.flush();
             parent.iniciarSalas(nombreTF.getText());
+            //out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
