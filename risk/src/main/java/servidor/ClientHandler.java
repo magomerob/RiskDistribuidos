@@ -41,8 +41,6 @@ public class ClientHandler implements Runnable {
                 msg = inp.readLine();
                 procesarMensaje(msg);
             }
-
-            clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
