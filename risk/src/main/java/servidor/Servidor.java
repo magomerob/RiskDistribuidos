@@ -98,6 +98,8 @@ public class Servidor {
                 ch.broadcast(msg);
                 ch.cerrarConexion();
             }
+            salas.remove(s);
+            broadcastSalas();
         }
     }
 

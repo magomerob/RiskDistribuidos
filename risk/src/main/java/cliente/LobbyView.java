@@ -157,8 +157,11 @@ public class LobbyView {
     }
 
     private void unirseSala(Sala s){
-        this.setEnLobby(false);
-        parent.unirseSala(s);  
+        if(s.getNumJugadores()<s.getCapacidad()){
+            this.setEnLobby(false);
+            parent.unirseSala(s);  
+        }
+        
     }
 
     private void mostrarSalas(){

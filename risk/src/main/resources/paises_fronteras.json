@@ -1,0 +1,329 @@
+{
+    "eastern_australia": {
+        "borders": [
+            "new_guinea",
+            "western_australia"
+        ]
+    },
+    "indonesia": {
+        "borders": [
+            "new_guinea",
+            "siam",
+            "western_australia"
+        ]
+    },
+    "new_guinea": {
+        "borders": [
+            "eastern_australia",
+            "western_australia",
+            "indonesia"
+        ]
+    },
+    "alaska": {
+        "borders": [
+            "kamchatka",
+            "northwest_territory",
+            "alberta"
+        ]
+    },
+    "ontario": {
+        "borders": [
+            "northwest_territory",
+            "alberta",
+            "western_united_states",
+            "eastern_united_states",
+            "quebec",
+            "greenland"
+        ]
+    },
+    "northwest_territory": {
+        "borders": [
+            "alaska",
+            "alberta",
+            "ontario",
+            "greenland"
+        ]
+    },
+    "venezuela": {
+        "borders": [
+            "central_america",
+            "brazil",
+            "peru"
+        ]
+    },
+    "madagascar": {
+        "borders": [
+            "south_africa",
+            "east_africa"
+        ]
+    },
+    "north_africa": {
+        "borders": [
+            "brazil",
+            "congo",
+            "east_africa",
+            "egypt",
+            "southern_europe",
+            "western_europe"
+        ]
+    },
+    "greenland": {
+        "borders": [
+            "iceland",
+            "ontario",
+            "northwest_territory",
+            "quebec"
+        ]
+    },
+    "iceland": {
+        "borders": [
+            "greenland",
+            "great_britain",
+            "scandinavia"
+        ]
+    },
+    "great_britain": {
+        "borders": [
+            "iceland",
+            "northern_europe",
+            "scandinavia",
+            "western_europe"
+        ]
+    },
+    "scandinavia": {
+        "borders": [
+            "iceland",
+            "ukraine",
+            "northern_europe",
+            "great_britain"
+        ]
+    },
+    "japan": {
+        "borders": [
+            "mongolia",
+            "kamchatka"
+        ]
+    },
+    "yakursk": {
+        "borders": [
+            "kamchatka",
+            "irkutsk",
+            "siberia"
+        ]
+    },
+    "kamchatka": {
+        "borders": [
+            "alaska",
+            "yakursk",
+            "irkutsk",
+            "japan",
+            "mongolia"
+        ]
+    },
+    "siberia": {
+        "borders": [
+            "ural",
+            "china",
+            "mongolia",
+            "irkutsk",
+            "yakursk"
+        ]
+    },
+    "ural": {
+        "borders": [
+            "ukraine",
+            "afghanistan",
+            "china",
+            "siberia"
+        ]
+    },
+    "afghanistan": {
+        "borders": []
+    },
+    "middle_east": {
+        "borders": [
+            "egypt",
+            "east_africa",
+            "southern_europe",
+            "afghanistan",
+            "india"
+        ]
+    },
+    "india": {
+        "borders": [
+            "middle_east",
+            "afghanistan",
+            "china",
+            "siam"
+        ]
+    },
+    "siam": {
+        "borders": [
+            "indonesia",
+            "india",
+            "china"
+        ]
+    },
+    "china": {
+        "borders": [
+            "mongolia",
+            "siam",
+            "india",
+            "afghanistan",
+            "ural",
+            "siberia"
+        ]
+    },
+    "mongolia": {
+        "borders": [
+            "kamchatka",
+            "japan",
+            "china",
+            "irkutsk",
+            "siberia"
+        ]
+    },
+    "irkutsk": {
+        "borders": [
+            "yakursk",
+            "kamchatka",
+            "mongolia",
+            "siberia"
+        ]
+    },
+    "ukraine": {
+        "borders": [
+            "southern_europe",
+            "scandinavia",
+            "northern_europe",
+            "ural",
+            "afghanistan",
+            "middle_east"
+        ]
+    },
+    "southern_europe": {
+        "borders": [
+            "egypt",
+            "north_africa",
+            "western_europe",
+            "northern_europe",
+            "ukraine",
+            "middle_east"
+        ]
+    },
+    "western_europe": {
+        "borders": [
+            "north_africa",
+            "southern_europe",
+            "northern_europe",
+            "great_britain"
+        ]
+    },
+    "northern_europe": {
+        "borders": [
+            "great_britain",
+            "scandinavia",
+            "southern_europe",
+            "ukraine",
+            "western_europe"
+        ]
+    },
+    "egypt": {
+        "borders": [
+            "east_africa",
+            "north_africa",
+            "southern_europe",
+            "middle_east"
+        ]
+    },
+    "east_africa": {
+        "borders": [
+            "egypt",
+            "north_africa",
+            "congo",
+            "south_africa",
+            "madagascar",
+            "middle_east"
+        ]
+    },
+    "congo": {
+        "borders": [
+            "north_africa",
+            "east_africa",
+            "south_africa"
+        ]
+    },
+    "south_africa": {
+        "borders": [
+            "congo",
+            "east_africa",
+            "madagascar"
+        ]
+    },
+    "brazil": {
+        "borders": [
+            "venezuela",
+            "peru",
+            "argentina",
+            "north_africa"
+        ]
+    },
+    "argentina": {
+        "borders": [
+            "brazil",
+            "peru"
+        ]
+    },
+    "eastern_united_states": {
+        "borders": [
+            "western_united_states",
+            "ontario",
+            "quebec",
+            "central_america"
+        ]
+    },
+    "western_united_states": {
+        "borders": [
+            "eastern_united_states",
+            "ontario",
+            "alberta",
+            "central_america"
+        ]
+    },
+    "quebec": {
+        "borders": [
+            "ontario",
+            "greenland",
+            "eastern_united_states"
+        ]
+    },
+    "central_america": {
+        "borders": [
+            "venezuela",
+            "western_united_states",
+            "eastern_united_states"
+        ]
+    },
+    "peru": {
+        "borders": [
+            "brazil",
+            "argentina",
+            "venezuela"
+        ]
+    },
+    "western_australia": {
+        "borders": [
+            "eastern_australia",
+            "new_guinea",
+            "indonesia"
+        ]
+    },
+    "alberta": {
+        "borders": [
+            "alaska",
+            "northwest_territory",
+            "ontario",
+            "western_united_states"
+        ]
+    }
+}

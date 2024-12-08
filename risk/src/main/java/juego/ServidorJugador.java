@@ -26,11 +26,6 @@ public class ServidorJugador implements Runnable{
             this.inp = this.s.getInputStream();
             this.out = this.s.getOutputStream();
 
-            PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.out, StandardCharsets.UTF_8));
-
-            pw.println("HOLA");
-            pw.flush();
-            
             }catch(IOException e){
                 e.printStackTrace();
             }
@@ -38,7 +33,6 @@ public class ServidorJugador implements Runnable{
 
     public void broadcast(String msg){
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.out, StandardCharsets.UTF_8));
-
         pw.println(msg);
         pw.flush();
     }

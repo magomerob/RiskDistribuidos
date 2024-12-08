@@ -134,24 +134,22 @@ public class WaitingRoomView {
         }if(separado[0].equals(Protocolo.SALA_LISTA)){
             this.cerrarConexion();
             String[] ips = new String[this.sala.getCapacidad()];
-            boolean empiezo = false;
+            int turno = 0;
             for(int i =0; i<jugadores.size(); i++){
                 Jugador j = jugadores.get(i);
                 //solo localhost
                 //if(j.getIp().equals( this.s.getInetAddress()) && j.getNombre().equals(this.nombre)){
                 if(j.getNombre().equals(this.nombre)){
-                    if(i==0){
-                        empiezo = true;
-                    }
+                    turno = i;
                 }
                 ips[i] = j.getIp().getHostName();
             }
-            final boolean _empiezo = empiezo;
+            final int _turno = turno;
             this.salir = true;
             Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    parent.iniciarJuego(ips, _empiezo);
+                    parent.iniciarJuego(ips, _turno);
                 }
             });            
         }
@@ -218,6 +216,7 @@ public class WaitingRoomView {
 
     public void cerrarConexion() {
         try{
+            this.out.flush();
             this.inp.close();
             this.out.close();
             if(this.s!=null){

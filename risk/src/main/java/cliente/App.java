@@ -53,7 +53,7 @@ public class App extends Application {
         primaryStage.show();
     }*/
 
-    public void iniciarJuego(String[] ips, boolean empiezo){
+    public void iniciarJuego(String[] ips, int miturno){
         primaryStage.setTitle("Risk");
 
         InterfazJuego interfazJuego = new InterfazJuego(this);
@@ -62,9 +62,12 @@ public class App extends Application {
         primaryStage.setTitle("Seleccion Nombre");
         primaryStage.setScene(scene);
         primaryStage.show();
-        Juego j = new Juego(ips, empiezo, interfazJuego);
+        Juego j = new Juego(ips, miturno, interfazJuego);
         interfazJuego.setJuego(j);
-    }
+
+        j.iniciarPartida();
+    }   
+    
 
     @Override
     public void stop() throws Exception {
@@ -97,4 +100,5 @@ public class App extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();        
     }
+
 }

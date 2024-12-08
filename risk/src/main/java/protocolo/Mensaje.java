@@ -52,4 +52,14 @@ public class Mensaje {
         return mensaje;
     }
     
+    public static String actualizarPais(String npais, int tropas, int jugador){
+        String mensaje = Protocolo.ACTUALIZAR_PAIS;
+        mensaje+=Protocolo.DEL;
+        mensaje+=npais;
+        mensaje+=Protocolo.DEL;
+        mensaje+=tropas;
+        mensaje+=Protocolo.DEL;
+        mensaje+=jugador;
+        return mensaje;
+    }
 }

@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class MapDrawer {
     private HashMap<String, Pais> paises;
     private static final String mapaPaises = "risk\\src\\main\\resources\\paises.json";
     private static final String caminos = "risk\\src\\main\\resources\\caminos.json";
+    private static final String fronteras = "risk\\src\\main\\resources\\paises_fronteras.json";
     private Pane view;
 
     public MapDrawer() throws IOException {
@@ -33,8 +35,10 @@ public class MapDrawer {
         this.view = new Pane();
         JSONObject jsonPaises = loadData(mapaPaises);
         JSONObject jsonCaminos = loadData(caminos);
+        JSONObject jsonFronteras = loadData(fronteras);
         drawCountries(jsonPaises);
         drawCaminos(jsonCaminos);
+        calcularFronteras(jsonFronteras);
     }
 
 
@@ -60,8 +64,8 @@ public class MapDrawer {
 
             svg.setContent(path);
             svg.setFill(Color.TRANSPARENT);
-            svg.setStroke(Color.BLUE);
-            svg.setStrokeWidth(2);
+            svg.setStroke(Color.BLACK);
+            svg.setStrokeWidth(1);
 
             Text texto = new Text("0");
             texto.setFill(Color.BLACK);
@@ -108,5 +112,18 @@ public class MapDrawer {
 
     public HashMap<String, Pais> getPaises(){
         return paises;
+    }
+
+    private void calcularFronteras(JSONObject datafronteras){
+        for (String name : datafronteras.keySet()) {
+            JSONArray array = datafronteras.getJSONObject(name).getJSONArray("borders");
+            List<String> adj = new ArrayList<>();
+            int len = array.length();
+            for (int i=0;i<len;i++){ 
+                adj.add(array.get(i).toString());
+            }
+
+            paises.get(name).setConexiones(adj);
+        }
     }
 }

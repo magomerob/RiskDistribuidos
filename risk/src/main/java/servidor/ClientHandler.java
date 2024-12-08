@@ -35,11 +35,11 @@ public class ClientHandler implements Runnable {
 
             Servidor.broadcastSalas();
             
-            String msg;
+            String msg = inp.readLine();
 
-            while (!this.clientSocket.isClosed()) {
-                msg = inp.readLine();
+            while (!this.clientSocket.isClosed() && msg != null) {
                 procesarMensaje(msg);
+                msg = inp.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
