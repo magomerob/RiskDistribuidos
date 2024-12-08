@@ -29,6 +29,7 @@ public class ServidorJugador implements Runnable{
             PrintWriter pw = new PrintWriter(new OutputStreamWriter(this.out, StandardCharsets.UTF_8));
 
             pw.println("HOLA");
+            pw.flush();
             
             }catch(IOException e){
                 e.printStackTrace();

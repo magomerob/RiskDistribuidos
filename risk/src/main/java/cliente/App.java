@@ -62,8 +62,7 @@ public class App extends Application {
         primaryStage.setTitle("Seleccion Nombre");
         primaryStage.setScene(scene);
         primaryStage.show();
-        final CountDownLatch sincro = new CountDownLatch(1);
-        Juego j = new Juego(ips, empiezo, interfazJuego, sincro);
+        Juego j = new Juego(ips, empiezo, interfazJuego);
         interfazJuego.setJuego(j);
     }
 

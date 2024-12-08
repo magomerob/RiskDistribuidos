@@ -43,7 +43,9 @@ public class Mensaje {
             mensaje+=Protocolo.DEL;
             mensaje+=j.getNombre();
             mensaje+=Protocolo.DEL;
-            mensaje+=j.getIp().getHostName();
+            //Para facilitar las cosas usaré solo localhost
+            //mensaje+=j.getIp().getHostName();
+            mensaje+="localhost";
             mensaje+=Protocolo.DEL;
             mensaje+=j.isListo();
         }

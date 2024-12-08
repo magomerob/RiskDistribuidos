@@ -20,21 +20,16 @@ public class Juego {
     private InterfazJuego interfaz;
     private int nturno;
     private boolean metoca;
-    final private CountDownLatch sincro;
 
-    public Juego(String[] ips, boolean empieza, InterfazJuego interfaz, CountDownLatch sincrop){
+    public Juego(String[] ips, boolean empieza, InterfazJuego interfaz){
         this.acabado = false;
         this.njugadores = ips.length;
         this.ips = ips;
         this.interfaz= interfaz;
-        this.sincro = sincrop;
         this.metoca = empieza;
 
         turno(metoca);
 
-        while(!acabado){
-            
-        }
     }
 
     private void turno(boolean metoca){
@@ -55,8 +50,6 @@ public class Juego {
             try{
                 this.ss = new ServerSocket(55555);
                 ExecutorService pool = Executors.newCachedThreadPool();
-                sincro.countDown();
-                System.out.println("sincro: "+sincro.getCount());
                 while(jugadores.size() < this.njugadores-1) {
                     Socket s = ss.accept();
                     System.out.println("aceptado");
@@ -79,16 +72,30 @@ public class Juego {
                 ip = "localhost";
             }
             System.out.println(ip);
-            sincro.await();
-            System.out.println("sincronizado");
-            s = new Socket("localhost", 55555);
+            
+
+            while (s == null) {
+                try {
+                    s = new Socket("localhost", 55555);
+                } catch (IOException e) {
+                    System.out.println("Server not available. Retrying in " + 10 + "ms...");
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException ie) {
+                        ie.printStackTrace();
+                        Thread.currentThread().interrupt(); // Restore interrupted status
+                    }
+                }
+            }
+            
+            System.out.println("estamos dentro");
+
             BufferedReader inp = new BufferedReader(new InputStreamReader(s.getInputStream(), StandardCharsets.UTF_8));
+            System.out.println(inp.readLine()); 
             System.out.println(inp.readLine()); 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }catch(InterruptedException e2){
-            e2.printStackTrace();
         }finally{
             if(s!=null){
                 try{

@@ -137,7 +137,9 @@ public class WaitingRoomView {
             boolean empiezo = false;
             for(int i =0; i<jugadores.size(); i++){
                 Jugador j = jugadores.get(i);
-                if(j.getIp().equals( this.s.getInetAddress()) && j.getNombre().equals(this.nombre)){
+                //solo localhost
+                //if(j.getIp().equals( this.s.getInetAddress()) && j.getNombre().equals(this.nombre)){
+                if(j.getNombre().equals(this.nombre)){
                     if(i==0){
                         empiezo = true;
                     }
